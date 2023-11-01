@@ -57,7 +57,7 @@ If you'd like to contribute to this project, please follow these guidelines:
 
 ## License
 
-This project is dual-licensed under the [MIT License](https://mit-license.org/) and [Apache License 2.0](https://apache.org/licenses/LICENSE-2.0).
+This project is dual-licensed under the [MIT License](https://mit-license.org/) or [Apache License 2.0](https://apache.org/licenses/LICENSE-2.0).
 
 ## Acknowledgments
 
