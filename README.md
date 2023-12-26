@@ -1,6 +1,8 @@
 # win95-keygen-rs
 
-This program generates an user-given number of Windows 95 product keys. This program is inspired by [alex-free](https://github.com/alex-free/open95keygen)'s implementation of the Windows 95 product key validation program in C.
+This program generates an user-given number of Windows 95 product keys. This 
+program is inspired by [alex-free](https://github.com/alex-free/open95keygen)'s 
+implementation of the Windows 95 product key generation program in C89.
 
 ## Table of Contents
 
@@ -13,59 +15,82 @@ This program generates an user-given number of Windows 95 product keys. This pro
 
 ## Installation
 
-To use this program, you'll need to install Rust and its package manager, Cargo. Follow the official [Rust installation guide](https://www.rust-lang.org/tools/install) to get them set up.
+To use this program, you'll need to download Rust at
+[rustup.rs](https://rustup.rs/).
 
-Once Rust and Cargo are installed, you can build and install this program using the following command:
+You can build and install this program using the following command:
 
-``` bash
-cargo install --path .
+``` console
+cargo build --release
 ```
 
 ## Usage
 
 After installing, you can use this program to generate Windows 95 product keys.
 
-``` bash
-./win95-keygen-rs <-o|--oem> <-q> [number]
+  - `--oem`: generate an OEM key [optional: default -> generate a retail key]
+  - `-n, --number`: number of product keys to generate [default: 1]
+
+Generate 10 OEM product keys:
+
+``` console
+./win95-keygen --oem -n 10
 ```
 
-If `-o` or `--oem` isn't provided, the program will generate a retail key. You need to provide `-q` or `--quantity` to provide the number of product keys you'd like to generate.
+Generate 10 retail product keys:
 
-Here are some examples on how to use it.
-
-1.  Generate 10 OEM product keys:
-
-``` bash
-./win95-keygen-rs -o -q 10
-```
-
-2.  Generate 10 retail product keys:
-
-``` bash
-./win95-keygen-rs -q 10
+``` console
+./win95-keygen -n 10
 ```
 
 ## Contributing
 
 If you'd like to contribute to this project, please follow these guidelines:
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix: `git checkout -b feature/new-feature`.
-3.  Make your changes and commit them.
-4.  Push your changes to your fork: `git push origin feature/new-feature`.
-5.  Create a pull request to the `main` branch of the original repository.
+1.  Follow the [code of conduct](CODE_OF_CONDUCT.md).
+
+2.  Follow the same code style: format your code using `rustfmt` and use
+    `clippy` to catch errors and polish your changes.
+    ``` console
+    $ rustfmt --edition 2021 src/*
+    $ cargo clippy
+    ```
+3.  For a reliable development experience suitable for production and
+    compatibility with the broader ecosystem, use Rust stable instead of Rust
+    nightly.
+
+4.  When using external libraries, it is recommended to choose lightweight
+    options, such as `ureq` over `reqwest`.
+
+5.  It is recommended to use the standard library instead of creating new
+    solutions from scratch.
+
+6.  If proposing changes, such as a new feature, please open an issue.
 
 ## License
 
-This project is dual-licensed under the [MIT License](https://mit-license.org/) or [Apache License 2.0](https://apache.org/licenses/LICENSE-2.0).
+This project is dual-licensed under the [MIT License](LICENSE_MIT.md) or
+[Apache License 2.0](LICENSE_APACHE.md), at your option.
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall
+be dual licensed as above, without any additional terms or conditions.
 
 ## Acknowledgments
 
-I'd like to give credit to the following libraries and tools used in this project:
+I'd like to give credit to the following libraries and tools used in this 
+project:
 
-  - [StructOpt](https://crates.io/crates/structopt) - for command-line argument parsing in Rust.
-  - [fastrand](https://crates.io/crates/fastrand) - for generating random numbers, quickly.
+  - [clap](https://crates.io/crates/clap) - for creating your command-line
+    parser, with all of the bells and whistles, declaratively or procedurally.
+
+  - [fastrand](https://crates.io/crates/fastrand) - for generating random 
+    numbers, quickly.
+
+  - [rayon](https://crates.io/crates/rayon) - for simple work-stealing
+    parallelism for Rust.
 
 ## Contact
 
-If you have any questions or need further assistance, you can contact me at <walker84837@gmail.com>.
+If you have any questions or need further assistance, you can contact me at 
+<walker84837@gmail.com>.

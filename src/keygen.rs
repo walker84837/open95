@@ -1,5 +1,3 @@
-use fastrand;
-
 const DIGIT_RANGE: u32 = 10;
 const OEM_DAY_RANGE: u32 = 366;
 
@@ -66,8 +64,10 @@ pub fn generate_3digits_retail() -> [u32; 3] {
         for digit in retail_key_part_1.iter_mut() {
             *digit = fastrand::u32(0..DIGIT_RANGE);
         }
-        if ![3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9]
-            .contains(&retail_key_part_1[0])
+        if ![
+            3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9,
+        ]
+        .contains(&retail_key_part_1[0])
         {
             break;
         }
@@ -120,4 +120,3 @@ pub fn generate_oem_year() -> [u32; 2] {
     }
     oem_key_year
 }
-

@@ -1,37 +1,35 @@
-use std::thread;
-use structopt::StructOpt;
+use clap::Parser;
+use rayon::prelude::*;
 
 mod keygen;
 
-#[derive(StructOpt)]
-struct Options {
-    #[structopt(long, short)]
+#[derive(Parser)]
+struct Args {
+    // Short isn't used as -o can bring confusion,
+    // as it can also stand for 'output'.
+    #[arg(long)]
     oem: bool,
-    #[structopt(long, short, default_value = "1")]
-    quantity: u32,
+
+    #[arg(short, long, default_value = "1")]
+    number: usize,
 }
 
 fn main() {
-    let options = Options::from_args();
+    let options = Args::parse();
+    let quantity = options.number;
 
-    let mut threads = vec![];
-    for _ in 0..options.quantity {
-        let thread_handle = if options.oem {
-            thread::spawn(|| keygen::generate_oem_key())
-        } else {
-            thread::spawn(|| keygen::generate_retail_key())
-        };
-        threads.push(thread_handle);
-    }
+    let keys: Vec<String> = (0..quantity)
+        .into_par_iter()
+        .map(|_| {
+            if options.oem {
+                keygen::generate_oem_key()
+            } else {
+                keygen::generate_retail_key()
+            }
+        })
+        .collect();
 
-    let keys: Vec<_> = threads.into_iter().map(|handle| handle.join().unwrap()).collect();
-
-    for (_i, key) in keys.iter().enumerate() {
-        if options.oem {
-            println!("{}", key);
-        } else {
-            println!("{}", key);
-        }
+    for key in keys {
+        println!("{}", key);
     }
 }
-
