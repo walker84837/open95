@@ -55,6 +55,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: ${{ matrix.rust }}
+        profile: minimal
+        override: true
+        target: ${{ matrix.target }}
+
     - name: Install dependencies
       run: |
         sudo apt-get update
