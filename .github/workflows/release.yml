@@ -117,13 +117,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Upload each downloaded artifact directly
-        for artifact in artifacts/*; do
-          asset_name=$(basename "$artifact")
-          echo "Uploading $artifact as $asset_name"
-          curl -sSL \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Content-Type: application/octet-stream" \
-            --data-binary @"$artifact" \
-            "${{ steps.create_release.outputs.upload_url }}?name=$asset_name"
+        # Upload each file from artifact directories
+        for artifact_dir in artifacts/*; do
+          dir_name=$(basename "$artifact_dir")
+          for file in "$artifact_dir"/*; do
+            file_name=$(basename "$file")
+            asset_name="${dir_name}_${file_name}"
+            echo "Uploading $file as $asset_name"
+            curl -sSL \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary @"$file" \
+              "${{ steps.create_release.outputs.upload_url }}?name=$asset_name"
+          done
         done
