@@ -5,8 +5,6 @@ mod keygen;
 
 #[derive(Parser)]
 struct Args {
-    // Short isn't used as -o can bring confusion,
-    // as it can also stand for 'output'.
     #[arg(long)]
     oem: bool,
 
@@ -22,9 +20,9 @@ fn main() {
         .into_par_iter()
         .map(|_| {
             if options.oem {
-                keygen::generate_oem_key()
+                keygen::KeyGenerator::generate_oem_key()
             } else {
-                keygen::generate_retail_key()
+                keygen::KeyGenerator::generate_retail_key()
             }
         })
         .collect();
